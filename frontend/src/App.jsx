@@ -1,11 +1,16 @@
+import SearchBar from "./components/SearchBar";
+import SearchResults from "./components/SearchResults";
+
 function App() {
   return (
-    <>
-      <h1>Vite + React</h1>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="flex flex-col h-screen">
+      <div className="bg-gray-900 p-4">
+        <SearchBar />
+      </div>
+      <div className="bg-gray-900 flex-1">
+        <SearchResults />
+      </div>
+    </div>
   );
 }
 
