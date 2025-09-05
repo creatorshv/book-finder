@@ -11,6 +11,7 @@ const SearchBar = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("Query dispatched");
     dispatch({ type: "SET_QUERY", payload: bookTitle });
   };
 

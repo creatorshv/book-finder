@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useBooks } from "../components/BookContext";
+import Error from "./Error";
 
 export default function SearchResults() {
   const { state, dispatch } = useBooks();
@@ -8,20 +9,29 @@ export default function SearchResults() {
     if (!state.query) return;
 
     dispatch({ type: "FETCH_START" });
+    console.log("Started fetching", state.query);
 
     fetch(
       `https://openlibrary.org/search.json?q=${encodeURIComponent(state.query)}`
     )
-      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        return res.json();
+      })
       .then((data) => {
-        dispatch({ type: "FETCH_SUCCESS", payload: data.docs });
+        console.log(data);
+        if (!data || !data.docs || data.docs.length === 0) {
+          dispatch({ type: "FETCH_ERROR", payload: "No books found." });
+        } else {
+          dispatch({ type: "FETCH_SUCCESS", payload: data.docs });
+        }
       })
       .catch((err) => {
         dispatch({ type: "FETCH_ERROR", payload: err.message });
       });
   }, [state.query]);
 
-  if (state.error) return <p>Error: {state.error}</p>;
+  if (state.error) return <Error error={state.error} />;
 
   return (
     <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
