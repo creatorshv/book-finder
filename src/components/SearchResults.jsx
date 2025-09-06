@@ -44,7 +44,7 @@ export default function SearchResults() {
             src={
               book.cover_i
                 ? `https://covers.openlibrary.org/b/id/${book.cover_i}-L.jpg`
-                : "/placeholder.png"
+                : "https://rhbooks.com.ng/wp-content/uploads/2022/03/book-placeholder.png"
             }
             alt={book.title}
             className="object-fill h-60"
